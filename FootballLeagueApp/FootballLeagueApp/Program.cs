@@ -1,4 +1,6 @@
 using FootballLeagueApp.DatabaseConnector;
+using FootballLeagueApp.Repositories;
+using FootballLeagueApp.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration["ConnectionString"];
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddScoped<ITeamRepository , TeamRepository>();
+builder.Services.AddScoped<ITeamService, TeamService>();
 
 var app = builder.Build();
 

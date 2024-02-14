@@ -1,6 +1,6 @@
 @FootballLeagueApp_HostAddress = http://localhost:5074
 
-GET {{FootballLeagueApp_HostAddress}}/weatherforecast/
+GET {{FootballLeagueApp_HostAddress}}/FootballLeague/
 Accept: application/json
 
 ###

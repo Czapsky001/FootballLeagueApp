@@ -15,6 +15,5 @@
 
         public int Draws { get; set; }
         public int Goals {  get; set; }
-
     }
 }

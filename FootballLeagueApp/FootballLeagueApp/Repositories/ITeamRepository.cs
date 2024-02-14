@@ -4,9 +4,9 @@ namespace FootballLeagueApp.Repositories
 {
     public interface ITeamRepository
     {
-        Task<IEnumerable<Team>> GetTeams();
+        Task<IEnumerable<Team>> GetTeamsAsync();
 
-        Task<Team> GetTeamByName(string name);
+        Task<Team> GetTeamByNameAsync(string name);
 
         Task<bool> AddTeamAsync (Team team);
 

@@ -17,7 +17,7 @@ namespace FootballLeagueApp.Repositories
 
 
 
-        public async Task<Team> GetTeamByName(string name)
+        public async Task<Team> GetTeamByNameAsync(string name)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace FootballLeagueApp.Repositories
 
         }
 
-        public async Task<IEnumerable<Team>> GetTeams()
+        public async Task<IEnumerable<Team>> GetTeamsAsync()
         {
             try
             {
