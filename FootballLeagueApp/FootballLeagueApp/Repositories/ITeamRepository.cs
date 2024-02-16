@@ -1,15 +1,14 @@
 ﻿using FootballLeagueApp.Models;
 
-namespace FootballLeagueApp.Repositories
+namespace FootballLeagueApp.Repositories;
+
+public interface ITeamRepository
 {
-    public interface ITeamRepository
-    {
-        Task<IEnumerable<Team>> GetTeamsAsync();
+    Task<IEnumerable<Team>> GetTeamsAsync();
 
-        Task<Team> GetTeamByNameAsync(string name);
+    Task<Team> GetTeamByNameAsync(string name);
 
-        Task<bool> AddTeamAsync (Team team);
+    Task<bool> AddTeamAsync (Team team);
 
-        Task<bool> DeleteTeamAsync(Team team);
-    }
+    Task<bool> DeleteTeamAsync(Team team);
 }

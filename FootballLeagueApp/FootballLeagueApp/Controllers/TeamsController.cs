@@ -1,6 +1,6 @@
 ﻿using FootballLeagueApp.Models;
-using FootballLeagueApp.Repositories;
-using FootballLeagueApp.Services;
+using FootballLeagueApp.Services.TeamsService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballLeagueApp.Controllers
@@ -18,8 +18,8 @@ namespace FootballLeagueApp.Controllers
             this.teamService = teamService;
         }
 
-        [HttpGet(Name = "GetAllTeams")]
-        public async Task<ActionResult<IEnumerable<Team>>> GetAllTeams() 
+        [HttpGet(Name = "GetAllTeams"), Authorize]
+        public async Task<ActionResult<IEnumerable<Team>>> GetAllTeams()
         {
             try
             {
@@ -28,11 +28,11 @@ namespace FootballLeagueApp.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
+                logger.LogError(ex, "An error occurred while processing the request.");
+                return StatusCode(500, "Internal Server Error");
             }
-;
         }
+
         [HttpPost(Name = "CreateTeam")]
         public async Task<ActionResult<Team>> CreateTeam(Team team)
         {
