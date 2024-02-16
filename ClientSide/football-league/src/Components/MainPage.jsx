@@ -1,9 +1,10 @@
-import React from 'react';
-import {useEffect, useState} from 'react';
-import axios from "axios"
-
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import { Link } from 'react-router-dom';
+import { useAuth } from '../AuthContext/AuthContext';
 
 const MainPage = () => {
+  const { user, logout } = useAuth();
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
@@ -18,6 +19,21 @@ const MainPage = () => {
 
   return (
     <div>
+      <div className="button-container">
+        {user ? (
+          <button onClick={logout} className="logoutBtn">Logout</button>
+        ) : (
+          <>
+            <Link to="/register" className="registerBtn">
+              Register
+            </Link>
+            <Link to="/login" className="loginBtn">
+              Login
+            </Link>
+          </>
+        )}
+      </div>
+
       <div className="table-container">
         <table>
           <thead>
