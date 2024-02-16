@@ -57,6 +57,13 @@ namespace FootballLeagueApp
                 });
             });
             services.AddLogging();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => 
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            });
             var connectionString = Configuration["ConnectionString"];
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<ITeamService, TeamService>();
@@ -116,6 +123,7 @@ namespace FootballLeagueApp
         {
             if (env.IsDevelopment())
             {
+                app.UseCors();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
