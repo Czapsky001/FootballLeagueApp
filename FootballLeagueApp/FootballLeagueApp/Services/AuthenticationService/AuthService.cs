@@ -1,4 +1,5 @@
 ﻿using FootballLeagueApp.Authentication;
+using FootballLeagueApp.Models;
 using FootballLeagueApp.Services.TokenService;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,17 +7,17 @@ namespace FootballLeagueApp.Services.AuthenticationService;
 
 public class AuthService : IAuthService
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
 
-    public AuthService(UserManager<IdentityUser> userManager, ITokenService tokenService)
+    public AuthService(UserManager<ApplicationUser> userManager, ITokenService tokenService)
     {
         _userManager = userManager;
         _tokenService = tokenService;
     }
     public async Task<AuthResult> RegisterAsync(string email, string userName, string password)
     {
-        var result = await _userManager.CreateAsync(new IdentityUser { Email = email, UserName = userName }, password);
+        var result = await _userManager.CreateAsync(new ApplicationUser { Email = email, UserName = userName }, password);
 
         if (!result.Succeeded)
         {

@@ -1,6 +1,8 @@
 ﻿using FootballLeagueApp.DatabaseConnector;
+using FootballLeagueApp.Models;
 using FootballLeagueApp.Repositories;
 using FootballLeagueApp.Services.AuthenticationService;
+using FootballLeagueApp.Services.FavTeamService;
 using FootballLeagueApp.Services.TeamsService;
 using FootballLeagueApp.Services.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +27,7 @@ namespace FootballLeagueApp
         }
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
@@ -69,7 +72,8 @@ namespace FootballLeagueApp
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddIdentityCore<IdentityUser>(options =>
+            //services.AddScoped<IFavoriteTeamService, FavoriteTeamService>();
+            services.AddIdentityCore<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;

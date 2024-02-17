@@ -5,7 +5,7 @@ namespace FootballLeagueApp.DatabaseConnector;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<Team> Teams { get; set; }
+    public DbSet<Team> Team { get; set; }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {

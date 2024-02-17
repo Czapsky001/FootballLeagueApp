@@ -18,7 +18,7 @@ namespace FootballLeagueApp.Controllers
             this.teamService = teamService;
         }
 
-        [HttpGet(Name = "GetAllTeams"), Authorize]
+        [HttpGet(Name = "GetAllTeams")]
         public async Task<ActionResult<IEnumerable<Team>>> GetAllTeams()
         {
             try

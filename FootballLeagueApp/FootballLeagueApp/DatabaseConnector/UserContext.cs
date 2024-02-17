@@ -1,18 +1,18 @@
-﻿using FootballLeagueApp.Models;
+﻿using FootballLeagueApp.DatabaseConnector;
+using FootballLeagueApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace FootballLeagueApp.DatabaseConnector;
-
-public class UserContext : IdentityUserContext<IdentityUser>
+public class UserContext : IdentityDbContext<ApplicationUser>
 {
     public UserContext(DbContextOptions<UserContext> options) : base(options)
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
+        //modelBuilder.ConfigureRelations();
     }
 }
