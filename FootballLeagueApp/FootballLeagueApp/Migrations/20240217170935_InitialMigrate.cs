@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FootballLeagueApp.Migrations.User
+namespace FootballLeagueApp.Migrations
 {
     /// <inheritdoc />
-    public partial class UserMigration : Migration
+    public partial class InitialMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +48,24 @@ namespace FootballLeagueApp.Migrations.User
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Points = table.Column<int>(type: "int", nullable: false),
+                    PlayedMatches = table.Column<int>(type: "int", nullable: false),
+                    Wins = table.Column<int>(type: "int", nullable: false),
+                    Loses = table.Column<int>(type: "int", nullable: false),
+                    Draws = table.Column<int>(type: "int", nullable: false),
+                    Goals = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +174,35 @@ namespace FootballLeagueApp.Migrations.User
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ApplicationUserTeam",
+                columns: table => new
+                {
+                    FansId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FavoriteTeamsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationUserTeam", x => new { x.FansId, x.FavoriteTeamsId });
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserTeam_AspNetUsers_FansId",
+                        column: x => x.FansId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserTeam_Teams_FavoriteTeamsId",
+                        column: x => x.FavoriteTeamsId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserTeam_FavoriteTeamsId",
+                table: "ApplicationUserTeam",
+                column: "FavoriteTeamsId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -200,6 +247,9 @@ namespace FootballLeagueApp.Migrations.User
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ApplicationUserTeam");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -213,6 +263,9 @@ namespace FootballLeagueApp.Migrations.User
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

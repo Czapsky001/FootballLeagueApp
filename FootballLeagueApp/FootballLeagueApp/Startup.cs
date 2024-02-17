@@ -72,7 +72,7 @@ namespace FootballLeagueApp
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
-            //services.AddScoped<IFavoriteTeamService, FavoriteTeamService>();
+            services.AddScoped<IFavoriteTeamService, FavoriteTeamService>();
             services.AddIdentityCore<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -83,7 +83,7 @@ namespace FootballLeagueApp
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             })
-                .AddEntityFrameworkStores<UserContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
@@ -112,8 +112,8 @@ namespace FootballLeagueApp
                 });
             try
             {
-                services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
-                services.AddDbContext<UserContext>(options => options.UseSqlServer(connectionString));
+                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+                //services.AddDbContext<UserContext>(options => options.UseSqlServer(connectionString));
 
             }
             catch (Exception ex)

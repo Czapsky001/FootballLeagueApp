@@ -1,7 +1,9 @@
-﻿namespace FootballLeagueApp.Services.FavTeamService
+﻿using FootballLeagueApp.Models;
+
+namespace FootballLeagueApp.Services.FavTeamService
 {
     public interface IFavoriteTeamService
     {
-        Task AddTeamToFavorite(string userId, Guid teamId);
+        Task<Team> AddTeamToFavorite(string userId, Guid teamId);
     }
 }

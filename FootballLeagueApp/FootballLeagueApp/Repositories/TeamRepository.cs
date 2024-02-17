@@ -6,10 +6,10 @@ namespace FootballLeagueApp.Repositories;
 
 public class TeamRepository : ITeamRepository
 {
-    private readonly DatabaseContext ctx;
+    private readonly ApplicationDbContext ctx;
     private readonly ILogger<TeamRepository> logger;
 
-    public TeamRepository(DatabaseContext ctx, ILogger<TeamRepository> logger)
+    public TeamRepository(ApplicationDbContext ctx, ILogger<TeamRepository> logger)
     {
         this.ctx = ctx;
         this.logger = logger;
@@ -21,7 +21,7 @@ public class TeamRepository : ITeamRepository
     {
         try
         {
-            return await ctx.Team.FirstOrDefaultAsync(e => e.Name == name);
+            return await ctx.Teams.FirstOrDefaultAsync(e => e.Name == name);
         }
         catch(Exception ex)
         {
@@ -35,7 +35,7 @@ public class TeamRepository : ITeamRepository
     {
         try
         {
-            return await ctx.Team.OrderBy(e => e.Points).ToListAsync();
+            return await ctx.Teams.OrderBy(e => e.Points).ToListAsync();
 
         }
         catch (Exception ex)
@@ -49,7 +49,7 @@ public class TeamRepository : ITeamRepository
     {
         try
         {
-            await ctx.Team.AddAsync(team);
+            await ctx.Teams.AddAsync(team);
             await ctx.SaveChangesAsync();
             return true;
         }catch(Exception ex)
@@ -66,7 +66,7 @@ public class TeamRepository : ITeamRepository
     {
         try
         {
-            ctx.Team.Remove(team);
+            ctx.Teams.Remove(team);
             await ctx.SaveChangesAsync();
             return true;
         }

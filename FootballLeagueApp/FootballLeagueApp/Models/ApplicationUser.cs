@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace FootballLeagueApp.Models
+namespace FootballLeagueApp.Models;
+
+public class ApplicationUser : IdentityUser
 {
-    public class ApplicationUser : IdentityUser
+    public List<Team> FavoriteTeams { get; set; }
+
+    public ApplicationUser()
     {
-        public List<Team> FavoriteTeams { get; set; } = new List<Team>();
+        FavoriteTeams = new List<Team>();
     }
 }
+
+

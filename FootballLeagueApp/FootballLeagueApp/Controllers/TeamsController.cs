@@ -34,7 +34,7 @@ namespace FootballLeagueApp.Controllers
         }
 
         [HttpPost(Name = "CreateTeam")]
-        public async Task<ActionResult<Team>> CreateTeam(Team team)
+        public async Task<ActionResult<Team>> CreateTeam([FromBody]Team team)
         {
             try
             {

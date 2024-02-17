@@ -21,8 +21,7 @@ public class TeamService : ITeamService
         if (existingTeam != null)
         {
             _logger.LogInformation($"Team {team.Name} already exists. ");
-            //return await existingTeam;
-            throw new Exception();
+            return existingTeam;
         }
         var newTeam = new Team
         {

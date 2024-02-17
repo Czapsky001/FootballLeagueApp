@@ -9,29 +9,29 @@ namespace FootballLeagueApp.Controllers
     [Route("api/[controller]")]
     public class FavoriteTeamController : ControllerBase
     {
+        private readonly IFavoriteTeamService _favoriteTeamService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly FavoriteTeamService _favoriteTeamService;
 
-        public FavoriteTeamController(UserManager<ApplicationUser> userManager, FavoriteTeamService favoriteTeamService)
+        public FavoriteTeamController(IFavoriteTeamService favoriteTeamService, UserManager<ApplicationUser> userManager)
         {
-            _userManager = userManager;
             _favoriteTeamService = favoriteTeamService;
+            _userManager = userManager;
         }
 
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddToFavorite(Guid teamId)
+        public async Task<IActionResult> AddToFavorite(Guid teamId, string email)
         {
-            var user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
+            try
             {
-                return Unauthorized();
+                var user = await _userManager.FindByEmailAsync(email);
+                await _favoriteTeamService.AddTeamToFavorite(user.Id, teamId);
+                return Ok();
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            await _favoriteTeamService.AddTeamToFavorite(user.Id, teamId);
-
-            return Ok();
         }
     }
 }
