@@ -1,9 +1,8 @@
 # FootballLeagueApp_RbIt
-At the beginning I created model that i needed then connect to database.
-I created controllers and implement jwt token for authorization.
-On frontent I created login and register form and authcontext for authorization.
-Styled page a little.
-At the end I implement more controllers on backend then connect it on frontent.
+At the beginning I created a model which I needed, then I connected to database.
+At frontend I created login and registration form
+I made some shape of website to make it readable
+At the end I implement more controllers at backend then connect it to frontend. 
 
 Future:
 edit profile, notification system, table and results from more than one league
