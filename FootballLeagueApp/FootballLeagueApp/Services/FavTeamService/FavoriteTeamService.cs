@@ -1,8 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using FootballLeagueApp.DatabaseConnector;
+﻿using FootballLeagueApp.DatabaseConnector;
 using FootballLeagueApp.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +22,10 @@ namespace FootballLeagueApp.Services.FavTeamService
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(userId);
+                var user = await _userManager.Users
+                    .Include(u => u.FavoriteTeams)
+                    .FirstOrDefaultAsync(u => u.Id == userId);
+
                 var team = await _context.Teams.FindAsync(teamId);
 
                 user.FavoriteTeams.Add(team);
@@ -41,5 +41,41 @@ namespace FootballLeagueApp.Services.FavTeamService
 
         }
 
+        public async Task<bool> RemoveTeamFromFavorite(string userId, Guid teamId)
+        {
+            try
+            {
+                var user = await _userManager.Users
+                    .Include(u => u.FavoriteTeams)
+                    .FirstOrDefaultAsync(u => u.Id == userId);
+
+                var team = await _context.Teams.FindAsync(teamId);
+
+                if (user == null || team == null)
+                {
+                    return false;
+                }
+
+                var teamsWithUserAsFan = await _context.Teams
+                    .Where(t => t.Fans.Any(f => f.UserName == user.UserName))
+                    .ToListAsync();
+
+                if (!teamsWithUserAsFan.Contains(team))
+                {
+                    return false;
+                }
+
+                user.FavoriteTeams.Remove(team);
+                team.Fans.Remove(user);
+
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while removing team from favorite.");
+                return false;
+            }
+        }
     }
 }

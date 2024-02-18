@@ -1,17 +1,16 @@
-﻿using FootballLeagueApp.DatabaseConnector;
+﻿using FootballLeagueApp.AutoMapperProfiles;
+using FootballLeagueApp.DatabaseConnector;
 using FootballLeagueApp.Models;
 using FootballLeagueApp.Repositories;
 using FootballLeagueApp.Services.AuthenticationService;
 using FootballLeagueApp.Services.FavTeamService;
 using FootballLeagueApp.Services.TeamsService;
 using FootballLeagueApp.Services.TokenService;
+using FootballLeagueApp.Services.UsersService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Net;
 using System.Text;
 
 
@@ -59,6 +58,7 @@ namespace FootballLeagueApp
                     }
                 });
             });
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddLogging();
             services.AddCors(options =>
             {
@@ -73,6 +73,7 @@ namespace FootballLeagueApp
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IFavoriteTeamService, FavoriteTeamService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddIdentityCore<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -113,7 +114,6 @@ namespace FootballLeagueApp
             try
             {
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-                //services.AddDbContext<UserContext>(options => options.UseSqlServer(connectionString));
 
             }
             catch (Exception ex)
@@ -135,6 +135,7 @@ namespace FootballLeagueApp
 
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 

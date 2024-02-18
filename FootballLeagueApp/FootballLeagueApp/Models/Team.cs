@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FootballLeagueApp.Models;
+﻿namespace FootballLeagueApp.Models;
 
 public class Team
 {
