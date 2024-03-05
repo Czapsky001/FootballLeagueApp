@@ -1,4 +1,4 @@
-# FootballLeagueApp_RbIt
+# FootballLeagueApp
 At the beginning I created a model which I needed, then I connected to database.
 At frontend I created login and registration form
 I made some shape of website to make it readable
